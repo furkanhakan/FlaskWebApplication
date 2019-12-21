@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<table class="table table-condensed table-danger table-hover ">
+    <thead>
+    <tr>
+        <td>ID</td>
+        <td>Nereden</td>
+        <td>Nereye</td>
+        <td>Tarih</td>
+        <td>Uçak Kapasitesi</td>
+        <td>Dolu Koltuk Sayısı</td>
+        <td>Fiyatı</td>
+        <td>Sepete Ekle</td> 
+    </tr>
+</thead>
+    
+    {% for row in tumucuslar %}
+    {%if row["kapasitesi"] == row["dolukoltuk"] or row["tarih"] < bugun %}
+    <tr style="color: red;" title="Uçak dolu veya kalkmış">
+    {%else%}
+    <tr>
+    {%endif%}
+        <td>{{row["id"]}}</td>
+        <td>{{row["nereden"]}}</td>
+        <td>{{row["nereye"]}}</td>
+        <td>{{row["tarih"]}}</td>
+        <td>{{row["kapasitesi"]}}</td>
+        <td>{{row["dolukoltuk"]}}</td>
+        <td>{{row["fiyat"]}}</td>
+        {%if row["kapasitesi"] == row["dolukoltuk"] or row["tarih"] < bugun %}
+        <td> <a class="btn btn-danger" href="{{url_for('sepeteekle',ucusid=row['id'])}}">Sepete Ekle</a> </td>
+        {%else%}
+        <td> <a class="btn btn-primary" href="{{url_for('sepeteekle',ucusid=row['id'])}}">Sepete Ekle</a> </td>
+        {%endif%}
+        
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
+

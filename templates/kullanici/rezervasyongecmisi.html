@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<h2 class="text-center">{{current_user.first_name}} {{current_user.last_name}}</h2>
+
+
+<table class="table table-condensed table-danger table-hover ">
+    <thead>
+        <tr>
+            <td>ID</td>
+            <td>Nereden</td>
+            <td>Nereye</td>
+            <td>Tarih</td>
+            <td>Uçak Kapasitesi</td>
+            <td>Dolu Koltuk Sayısı</td>
+            <td>Fiyatı</td>
+            <td>Bilet Kesim Tarihi</td>
+        </tr>
+    </thead>
+        {% for rezervasyon,ucus in rezervasyonlarim %}
+            <tr>
+                <td>{{rezervasyon["id"]}}</td>
+                <td>{{ucus["nereden"]}}</td>
+                <td>{{ucus["nereye"]}}</td>
+                <td>{{ucus["tarih"]}}</td>
+                <td>{{ucus["kapasitesi"]}}</td>
+                <td>{{ucus["dolukoltuk"]}}</td>
+                <td class="fiyat">{{ucus["fiyat"]}}</td>
+                <td>{{rezervasyon["tarih"]}}</td>
+            </tr>
+        {% endfor %}
+</table>
+
+<script>
+window.onload = function(e){ 
+    var x = document.getElementsByClassName('fiyat');
+    var toplamtutar = 0;
+    for(var i = 0;i<x.length;i++){
+        toplamtutar = toplamtutar+parseInt(x[i].innerHTML);
+    }
+    
+    document.getElementById('fiyat').innerHTML=toplamtutar;
+}
+</script>
+<div class="pull-right">
+    <div>
+        Toplam Tutar : <span id="fiyat"></span> TL
+    </div>
+</div>
+
+
+{% endblock %}
+

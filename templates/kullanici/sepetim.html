@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<h2 class="text-center">{{current_user.first_name}} {{current_user.last_name}}</h2>
+
+<table class="table table-condensed table-danger table-hover ">
+    <thead>
+        <tr>
+            <td>ID</td>
+            <td>Nereden</td>
+            <td>Nereye</td>
+            <td>Tarih</td>
+            <td>Uçak Kapasitesi</td>
+            <td>Dolu Koltuk Sayısı</td>
+            <td>Fiyatı</td>
+            <td>Sil</td> 
+        </tr>
+    </thead>
+        {% for ucus,sepet in sepetim %}
+            <tr>
+                <td>{{sepet["id"]}}</td>
+                <td>{{ucus["nereden"]}}</td>
+                <td>{{ucus["nereye"]}}</td>
+                <td>{{ucus["tarih"]}}</td>
+                <td>{{ucus["kapasitesi"]}}</td>
+                <td>{{ucus["dolukoltuk"]}}</td>
+                <td class="fiyat">{{ucus["fiyat"]}}</td>
+                <td><a href="{{url_for('sepettensil',id=sepet['id'])}}" class="btn btn-danger">Sil</a></td>
+            </tr>
+        {% endfor %}
+</table>
+
+<script>
+    var toplamtutar = 0
+window.onload = function(e){ 
+    var x = document.getElementsByClassName('fiyat');
+    var sontutar = 0;
+    for(var i = 0;i<x.length;i++){
+        toplamtutar = toplamtutar+parseInt(x[i].innerHTML);
+    }
+    if(document.getElementById('bonus').innerHTML == "")
+    {
+        document.getElementById('bonus').innerHTML = "0";
+    }
+
+    document.getElementById('fiyat').innerHTML=toplamtutar;
+}
+function bonussorgula(){
+    if (document.getElementById("bonuscheck").checked == true){
+        sontutar = parseFloat(document.getElementById('fiyat').innerHTML,10) - parseFloat(document.getElementById('bonus').innerHTML,10);
+        if (sontutar < 0){
+            sontutar = 0;
+        }
+        document.getElementById('fiyat').innerHTML = sontutar;
+        
+    }
+    else{
+        document.getElementById('fiyat').innerHTML = toplamtutar;
+    }
+    
+}
+</script>
+
+<div class="pull-right">
+    <div>
+        Toplam Tutar : <span id="fiyat"></span> TL
+    </div>
+    <form method="POST" action="{{url_for('rezervasyonekle',id = current_user.id)}}">
+        <div class="form-group">
+            <input type="checkbox" name="bonus" value="{{bonus['bonus']}}" onclick="bonussorgula()" class="" id="bonuscheck">
+            <label>Kullanılabilir Bonus : <span id="bonus">{{bonus["bonus"]}}</span> TL</label>
+        </div>
+        <div style="margin-top: 15px;" class="form-group">
+                <button class="btn btn-success">Onayla</button>
+            </div>
+    </form>
+</div>
+
+{% endblock %}
