@@ -164,6 +164,8 @@ def sepetibosalt(id):
 @login_required
 def rezervasyonekle(id):
     sepetim = db.session.query(Ucus,Sepet).filter(Ucus.id == Sepet.ucus_id,Sepet.user_id == id).all()
+    adet = request.form["adet"]
+    print(adet)
     bonusgelen = request.form.get('bonus')
     if not sepetim:
         flash('Sepetiniz Boş. Lütfen önce sepete bilet ekleyin.','danger')

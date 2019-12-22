@@ -14,6 +14,7 @@
             <td>Uçak Kapasitesi</td>
             <td>Dolu Koltuk Sayısı</td>
             <td>Fiyatı</td>
+            <td>Adet</td>
             <td>Sil</td> 
         </tr>
     </thead>
@@ -26,6 +27,7 @@
                 <td>{{ucus["kapasitesi"]}}</td>
                 <td>{{ucus["dolukoltuk"]}}</td>
                 <td class="fiyat">{{ucus["fiyat"]}}</td>
+                <td><input type="number" min="1" style="width: 50px;" value="1" class="form-control" name="adet"> </td>
                 <td><a href="{{url_for('sepettensil',id=sepet['id'])}}" class="btn btn-danger">Sil</a></td>
             </tr>
         {% endfor %}
