@@ -19,6 +19,9 @@
         .col-centered { float: none; margin: 0 auto; }
         #menu-div{text-align: center;}
         #menu-div a{margin-left: 10px;}
+        #main{
+          height: 362px;
+        }
     </style>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -132,7 +135,7 @@
     {% endblock %}
 
     {% block main %}
-        <div class="container">{% block content %}{% endblock %}</div>
+        <div class="container" id="main">{% block content %}{% endblock %}</div>
     {% endblock %}
     </div>
 
