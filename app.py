@@ -7,6 +7,14 @@ import urllib.parse as urlparse
 import threading
 import os, signal 
 
+# Sentry Connection
+import sentry_sdk
+from sentry_sdk.integrations.flask import FlaskIntegration
+sentry_sdk.init(
+    dsn="https://1bf495d85a5a47b7ae203992c6a22e65@sentry.io/2519626",
+    integrations=[FlaskIntegration()]
+)
+
 
 """ Flask application factory"""
 
@@ -135,6 +143,12 @@ def sepeteekle(ucusid):
     else:
         print("Giriş Yapın")
     return redirect(url_for('tumucakseferleri'))
+
+# Sentry test
+@app.route('/debug-sentry')
+def trigger_error():
+    division_by_zero = 1 / 0
+
             
 @app.route('/sepetim/<id>',methods = ["GET"])
 @login_required
